@@ -15,20 +15,20 @@ def InvertedIndex():
     #Database Details
     myclient = pymongo.MongoClient("mongodb://localhost/27017")
     mydb = myclient["DataA"]
-    mycol = mydb["keywords"]
+    KeyWordsCol = mydb["keywords"]
     Diction = mydb["Diction"]
     
     #Create an Index for the "Term" in the Diction Table
     Diction.create_index([("Term", pymongo.ASCENDING)])
 
-    #Get the last Element Indexed
+    #Get the lastElement Element Indexed
     LastEleCol = myclient["last_db"]
-    LastElements = LastEleCol["LastElements"]
+    lastElementCollection = LastEleCol["lastElementCollection"]
 
-    last=LastElements.find({}).limit(1)
+    lastElement=lastElementCollection.find({}).limit(1)
     
-    if(last.count()>0):
-        last_posting_index = last[0]["posting"]
+    if(lastElement.count()>0):
+        last_posting_index = lastElement[0]["posting"]
     else:
         last_posting_index=1
             
@@ -39,8 +39,8 @@ def InvertedIndex():
     CheckWordPresent=0
     CheckWordNotPresent=0
 
-    #Get all the rows in the keyword database after the last entered index
-    TotalNumDocumnets = mycol.find({"_id" : { "$gte": last_posting_index }})
+    #Get all the rows in the keyword database after the lastElement entered index
+    TotalNumDocumnets = KeyWordsCol.find({"_id" : { "$gte": last_posting_index }})
 
 
     #Creating the InvertedIndex
@@ -50,7 +50,7 @@ def InvertedIndex():
             CountTotalWords+=1
             i=0 #Count for the number of doucments the word is present
             j=0 #Count for the Total frequency of the word in all documents
-            TempF ={}
+            Temp_Dictionary ={}
 
             #This is for updating the Array
             WordInDictionList=Diction.find({"Term": word})
@@ -70,7 +70,7 @@ def InvertedIndex():
                 WordPresent = False
                 ARD = []
 
-            for n in mycol.find({},{word : 1}):
+            for n in KeyWordsCol.find({},{word : 1}):
                 if(len(n)>1):                    
                     i+=1
                     j+=n[word]
@@ -90,24 +90,26 @@ def InvertedIndex():
                     #If word not present then add the new keyword into the Diction Table
                     CheckWordNotPresent+=1
                     print("New Document Added")
-                    TempF["Term"]=word
-                    TempF["Docs"]=i
-                    TempF["Total"]=j
-                    TempF["ARD"]=ARD
-                    Diction.insert_one(TempF)
+                    Temp_Dictionary["Term"]=word
+                    Temp_Dictionary["Docs"]=i
+                    Temp_Dictionary["Total"]=j
+                    Temp_Dictionary["ARD"]=ARD
+                    Diction.insert_one(Temp_Dictionary)
 
+        
+        print(last_posting_index)
         last_posting_index+=1
+
+        #Update the lastElement element Indexed in the LastElementsTable
+        lastElementCollection.update_one({ "posting": lastElement[0]["posting"] }, { "$set": { "posting": last_posting_index } })
+        
 
             
 
     print("Total number of words "+ str(CountTotalWords)+" present = "+str(CountWordPresent)+" not present = "+str(CountWordsNotPresent))
     print("Total number of words "+ str(CountTotalWords)+" CheckWordPresent = "+str(CheckWordPresent)+" CheckWordNotPresent = "+str(CheckWordNotPresent))
 
-    #Update the last element Indexed in the LastElementsTable
-    myquery = { "posting": last[0]["posting"] }
-    newvalues = { "$set": { "posting": last_posting_index } }
-
-    LastElements.update_one(myquery, newvalues)
+    
 
 
 

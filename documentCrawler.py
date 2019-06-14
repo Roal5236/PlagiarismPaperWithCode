@@ -46,7 +46,10 @@ def start(url):
     #Get the words from the website
     #word_list = wc.start(url)
     
+    #Calculate the path of the text file that will contain the information about PDF
     name = "X/"+str(k)+".txt"
+
+    #Save the Pdf as a text file
     word_list = gp.save_pdf(url,name)
     
 
@@ -140,23 +143,25 @@ def create_dictionary(word_list):
         
             
     print('Dictionary Created')
-    sorted_x = sorted(word_count.items(), key=operator.itemgetter(1))
+    sorted_x = sorted(word_count.items(), key=operator.itemgetter(1),reverse = True)
     sorted_dict = collections.OrderedDict(sorted_x)
     return sorted_dict        
 
 
 def remove_Irrelevant_Words(word_list):
+
+    #This removes the words that have a frequency less than 5 and the length of the word is less than 2
     final_word_count={}
     for word in word_list:
         temp = word_list[word]
-        if(temp>5 and len(word)>3):
+        if(temp>5 and len(word)>2):
             final_word_count[word]=temp
 
     return final_word_count
 
 
 def lemma_wordlist(word_list):
-    
+    #This Lemmatizes the words 
     lemmatizer = lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
     Lemma_list = []
     

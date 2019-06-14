@@ -26,18 +26,15 @@ visited = linkdb["visited"]
 
 myDocs.create_index([('url', pymongo.ASCENDING)])
 
-
+#This opens the Selenium driver and Opens Firefox for webscraping
 def StartWorkFromTasks(url):
-    
     browser = webdriver.Firefox(executable_path=r'C:/Users/HP/Documents/Python Scripts/geckodriver.exe')
-
     browser.get(url)
     time.sleep(1)
 
+    #This scrolls the webpage down
     elem = browser.find_element_by_tag_name("body")
-
     no_of_pagedowns = 200
-
     while no_of_pagedowns:
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(0.2)
@@ -45,12 +42,13 @@ def StartWorkFromTasks(url):
 
     # post_elems = browser.find_elements_by_class_name("badge-light")
 
+    #The arrays to store the different type of links
     papers =[]
     tasks = []
     sotas = []
     otherLinks = []
 
-
+    #Get all the links
     elems = browser.find_elements_by_xpath("//a[@href]")
     for elem in elems:
         
@@ -70,18 +68,29 @@ def StartWorkFromTasks(url):
     papers = list(set(papers))
     tasks = list(set(tasks))
 
+    #If the link contains "task" then we add it to the unvisited list to be parsed
     for task in tasks:
         result = str(hashlib.md5(task.encode()).hexdigest())
         if(visited.find({"_id": result}).count()<=0 and unvisited.find({"_id": result}).count()<=0):
             LinkDict  = {"Link": task, "_id": result}
             unvisited.insert_one(LinkDict)
 
+    #If the link contains PDF link then we fetch the pdf Links and Add the Links to the Database
     for paper_url in papers:
-        pdfLink = gpdf.GetPdfLink(paper_url)
-        if(len(pdfLink)>5 and myDocs.find({"url": pdfLink}).count()<=0):
-            print('\n\n')
-            print(pdfLink)
-            dc.start(pdfLink)
+
+        if(paper_url.endswith('.pdf')):
+            pdfLink = gpdf.GetPdfLink(paper_url)
+            if(len(pdfLink)>5 and myDocs.find({"url": pdfLink}).count()<=0):
+                print('\n\n')
+                print(pdfLink)
+                dc.start(pdfLink)
+
+        if(paper_url.endswith('.docx')):
+            pass
+
+        if(paper_url.endswith('.ppt')):
+            pass
+
 
     browser.quit()
 

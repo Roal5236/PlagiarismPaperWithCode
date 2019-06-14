@@ -4,7 +4,7 @@ Created on Fri May 17 11:28:15 2019
 
 @author: rohaa
 """
-
+import time
 import pymongo
 import documentCrawler as dc
 from nltk.tokenize import word_tokenize
@@ -12,12 +12,13 @@ from collections import Counter
 import documentCrawler as dc
 
 def InvertedIndexSearch(UsersDocument):
+    #Details of the database
     myclient = pymongo.MongoClient("mongodb://localhost/27017")
     mydb = myclient["DataA"]
-    Posting = mydb["Posting"]
     Diction = mydb["Diction"]
     
-    raw = open(UsersDocument).read().lower()
+    #Reading the user's document
+    raw = open(UsersDocument, "r", encoding='utf8', errors='ignore').read().lower()
     
     #Tokenizing the words
     tokens = word_tokenize(raw)
@@ -37,9 +38,10 @@ def InvertedIndexSearch(UsersDocument):
     """Need to do this based on min Doc Frequency"""
     ArrayOfMinDocuments = []
     
-    threshold=100
+    threshold=25
     i=1
-    for word,freq in create_dict.items():
+    #Get an List of all documents relevant to a perticular keyword and Add to to ArrayOfMinDocuments
+    for word in create_dict.keys():
         if(i<=threshold):
             diction_words = Diction.find({"Term": word})
             for row in diction_words:
@@ -50,16 +52,22 @@ def InvertedIndexSearch(UsersDocument):
             break
         i+=1
         
-
+    #Calculate the number of documents with the most hits
     CountRelevantDocs = dc.create_dictionary(ArrayOfMinDocuments)
 
-
+    #Convert the above Dictionary into a list
     finalDocArray=[]
-    for docId, docFreq in CountRelevantDocs.items():
+    for docId in CountRelevantDocs.keys():
         finalDocArray.append(docId)
     
-    print(finalDocArray)
-    return finalDocArray
-    
-UsersDocument = "Test_document.txt"
-InvertedIndexSearch(UsersDocument)
+    return finalDocArray[0:20]
+
+#Start the time
+start = time.time()    
+
+UsersDocument="Test_document.txt"
+print(InvertedIndexSearch(UsersDocument))
+
+#End Time
+end = time.time()
+print("time:",end-start)
