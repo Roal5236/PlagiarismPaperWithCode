@@ -1,0 +1,85 @@
+Introduction to Data ScienceKamal Al Nasr, Matthew Hayes and Jean-Claude Pedjeu
+Computer Science and Mathematical Sciences
+College of Engineering
+ Tennessee State University
+1st Annual Workshop on Data SciencesOutlineData, Big Data and Challenges
+Data Science
+Introduction
+Why Data Science
+Data Scientists
+What do they do?
+Major/Concentration in Data Science
+What courses to take.Data All AroundLots of data is being collected and warehoused 
+Web data, e-commerce
+Financial transactions, bank/credit transactions
+Online trading and purchasing
+Social Network
+How Much Data Do We have?Google processes 20 PB a day (2008)
+Facebook has 60 TB of daily logs
+eBay has 6.5 PB of user data + 50 TB/day (5/2009)
+1000 genomes project: 200 TB
+
+
+Cost of 1 TB of disk: $35
+Time to read 1 TB disk: 3 hrs 
+      (100 MB/s)Big DataBig Data is any data that is expensive to manage and hard to extract value from 
+Volume
+The size of the data
+Velocity
+The latency of data processing relative to the growing demand for interactivity
+Variety and Complexity
+the diversity of sources, formats, quality, structures.
+Big DataTypes of Data We HaveRelational Data (Tables/Transaction/Legacy Data)
+Text Data (Web)
+Semi-structured Data (XML) 
+Graph Data
+Social Network, Semantic Web (RDF), … 
+Streaming Data 
+You can afford to scan the data once
+What To Do With These Data?Aggregation and Statistics 
+Data warehousing and OLAP
+Indexing, Searching, and Querying
+Keyword based search 
+Pattern matching (XML/RDF)
+Knowledge discovery
+Data Mining
+Statistical Modeling
+Big Data and Data Science“… the sexy job in the next 10 years will be statisticians,” Hal Varian, Google Chief Economist
+The U.S. will need 140,000-190,000 predictive analysts and 1.5 million managers/analysts by 2018. McKinsey Global Institute’s June 2011
+New Data Science institutes being created or repurposed – NYU, Columbia, Washington, UCB,...
+New degree programs, courses, boot-camps:
+e.g., at Berkeley: Stats, I-School, CS, Astronomy…
+One proposal (elsewhere) for an MS in “Big Data Science”What is Data Science?An area that manages, manipulates, extracts, and interprets knowledge from tremendous amount of data
+Data science (DS) is a multidisciplinary field of study with goal to address the challenges in big data
+Data science principles apply to all data – big and smallhttps://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century/What is Data Science?Theories and techniques from many fields and disciplines are used to investigate and analyze a large amount of data to help decision makers in many industries such as science, engineering, economics, politics, finance, and education
+Computer Science
+Pattern recognition, visualization, data warehousing, High performance computing, Databases, AI
+Mathematics
+Mathematical Modeling
+Statistics
+Statistical and Stochastic modeling, Probability.Why is it sexy?Gartner’s 2014 Hype CycleData ScienceData ScienceReal Life ExamplesCompanies learn your secrets, shopping patterns, and preferences
+For example, can we know if a woman is pregnant, even if she doesn’t want us to know? Target case study
+Data Science and election (2008, 2012)
+1 million people installed the Obama Facebook app that gave access to info on “friends”
+Data ScientistsData Scientist
+The Sexiest Job of the 21st Century
+They find stories, extract knowledge. They are not reporters Data ScientistsData scientists are the key to realizing the opportunities presented by big data. They bring structure to it, find compelling patterns in it, and advise executives on the implications for products, processes, and decisions
+What do Data Scientists do?National Security
+Cyber Security
+Business Analytics
+Engineering 
+Healthcare 
+And more ….
+
+
+
+
+Concentration in Data ScienceMathematics and Applied Mathematics
+Applied Statistics/Data Analysis
+Solid Programming Skills (R, Python, Julia, SQL)
+Data Mining
+Data Base Storage and Management
+Machine Learning and discovery
+
+
+

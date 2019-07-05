@@ -1,0 +1,53 @@
+
+
+
+<div style="width:100%;">
+
+  <mat-tab-group [ngStyle]="{ 'display': disp() }" style="width:70%" >
+      <!-- The Sentences -->
+      <mat-tab label="SENTENCES"  >
+        <perfect-scrollbar style="width: 100%; max-height: 400px;margin-top:5%" *ngIf="plagPerc > 0">
+          <div style="width:90%;margin-bottom:2%" *ngFor="let item of userSentences| keyvalue; index as i"  >
+            <mat-accordion *ngIf="userSentences[i][2] != 'none'">
+              <mat-expansion-panel id="{{ i }}" [expanded]=" panelId === i">
+                <mat-expansion-panel-header>
+
+                  <mat-panel-title>
+                      <b style="color:#80ccff">{{ userSentences[i][2] }}</b>
+                  </mat-panel-title>
+
+                </mat-expansion-panel-header>
+
+                <p><b>Source Sentence: </b> {{ userSentences[i][3] }}</p>
+
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </perfect-scrollbar>
+
+        <p *ngIf="plagPerc <= 0">No Plagiarised Sentences</p>
+      </mat-tab>
+
+      <!-- The Documents -->
+      <mat-tab label="DOCUMENTS">
+        <perfect-scrollbar *ngIf="docPlag > 0">
+            <mat-card *ngFor="let docs of DocsPerc | keyvalue; index as i" style="margin:5px"> {{ docs.key }}</mat-card>
+        </perfect-scrollbar>
+
+        <p *ngIf="docPlag <= 0">No Plagiarised Documents</p>
+      </mat-tab>
+  </mat-tab-group>
+
+
+  <div style="margin:2%;margin-top:8%;float:left" [ngStyle]="{ 'display': disp() }">
+      <p>Plagrism Percentage:<br>
+        <span style="font-size:40px;">{{ plagPerc }} %</span></p>
+  </div>
+  <div style="margin:2%;margin-top:8%;float:left" [ngStyle]="{ 'display': disp() }">
+      <p>Documents Plagiarised:<br>
+        <span style="font-size:40px;">{{ docPlag }}</span>
+      </p>
+  </div>
+  <mat-spinner class="spinner" [ngStyle]="{ 'display': displaySpinnerFunct() }"></mat-spinner>
+</div>
+

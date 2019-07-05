@@ -1,0 +1,34 @@
+
+        <div style="width:100%;height:700px">
+    <!-- <textarea class="plag-text-area" name="palg_text" id='editor' [(ngModel)]="txtz" required></textarea> -->
+    <div class="plag-text-area spacing">
+      <div style="width:95%;height:1000px;margin:0px;padding:2.5%" id ="editor" contentEditable="true" #Editor  name="fieldName" ngDefaultControl [ngStyle]="{ 'display': disp() }" ng-required>
+
+      </div>
+      <div id="textafter" #textAfter  style="width:95%;min-height:1000px;padding:2.5%;background: #bfbfbf" [ngStyle]="{ 'display': hide() }">
+        <p *ngFor="let item of userSentences | keyvalue; index as i"  (click)="postsService.openPanel(i)">
+          <mark *ngIf=" userSentences[i][1] === 'plag' " class="hilight">
+            {{ userSentences[i][0] }}
+          </mark>
+
+          <span *ngIf=" userSentences[i][1] === 'notplag' ">
+            {{ userSentences[i][0] }}
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <div style="width:100%;height:200px">
+      <div class="upload-container" [ngStyle]="{ 'background-color': changeColor(UploadFileText) }">
+        <label id="fileLabel" for="files">{{ UploadFileText }}</label>
+        <input id="files" style="display:none" type="file" (change)="postsService.OnUpload($event)">
+        <mat-progress-bar mode="indeterminate" [ngStyle]="{ 'display': displayBar(UploadFileText)}"></mat-progress-bar>
+      </div>
+      <button mat-raised-button style="float:right;" color="accent" (click)="getEditorText()">CHECK</button>
+      <button mat-raised-button style="float:right;margin-right:20px" color="primary" (click)="switchEditor()" [ngStyle]="{ 'display': hide() }">EDIT</button>
+    </div>
+  </div>
+
+
+
+
